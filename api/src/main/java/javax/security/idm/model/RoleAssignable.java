@@ -37,18 +37,12 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package javax.security;
+package javax.security.idm.model;
+
+import org.picketlink.idm.model.IdentityType;
 
 /**
- * A placeholder class, to be removed once we get real classes..
+ * <code>RoleAssignable</code> is an identity type which may be assigned roles.
  */
-public class Placeholder {
-
-    /**
-     * This class does something.
-     */
-   public void doSomething() {
-
-   }
-
+public interface RoleAssignable extends IdentityType {
 }
