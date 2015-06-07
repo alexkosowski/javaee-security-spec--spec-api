@@ -14,9 +14,10 @@ import static org.junit.Assert.*;
 /**
  * Tests {@link javax.security.idm.model.Helper}
  */
+@SuppressWarnings("unchecked")
 public class HelperTest {
 
-    private static final String WORKING_DIRECTORY = "./picketlink";
+    private static final String WORKING_DIRECTORY = "./target/picketlink";
     private static final String REALM_NAME = "myRealm";
 
     {
