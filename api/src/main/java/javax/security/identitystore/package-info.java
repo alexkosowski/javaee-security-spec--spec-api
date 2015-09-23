@@ -39,8 +39,15 @@
  */
 
 /**
- * The root Security API package.
+ * The Identity Store API package.
+ * <p>
+ * An Identity Store is a mechanism for validating a Caller's credentials
+ * and accessing a Caller's identity attributes, and would be used by
+ * an authentication mechanism, such as JASPIC.
+ * An Identity Store obtains identity data from a persistence
+ * mechanism, such as a file, database, or LDAP.
  *
  * @version 1.0
  */
-package javax.security;
+package javax.security.identitystore;
+

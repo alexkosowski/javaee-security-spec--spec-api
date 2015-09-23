@@ -37,10 +37,31 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.annotation;
+
+import javax.inject.Qualifier;
+import javax.security.identitystore.IdentityStore;
+import javax.security.identitystore.credential.Credential;
+import javax.security.identitystore.credential.CredentialValidator;
+import java.lang.annotation.Repeatable;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * <code>Validator</code> is a CDI Qualifier, which registers <code>{@link CredentialValidator}</code>
+ * implementations for use by <code>{@link javax.security.identitystore.IdentityStore}</code>,
+ * to validate a <code>{@link javax.security.identitystore.credential.Credential}</code>
+ * implementation against an <code>IdentityStore</code> implementation.
  */
-package javax.security;
+@Qualifier
+@Retention(RUNTIME)
+@Target({TYPE, METHOD, FIELD, PARAMETER})
+@Repeatable(Validators.class)
+public @interface Validator {
+    Class<? extends Credential> credentialClass();
+    Class<? extends IdentityStore> identityStoreClass();
+}

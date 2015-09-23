@@ -37,10 +37,56 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.persistence;
+
+import javax.enterprise.inject.Alternative;
+import javax.security.identitystore.CredentialValidationResult;
+import javax.security.identitystore.credential.UsernamePasswordCredential;
+import java.util.List;
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * <code>DatabaseIdentityStore</code> is an {@link javax.security.identitystore.IdentityStore}
+ * implementation which uses an external database as a persistence mechanism.
  */
-package javax.security;
+@Alternative
+public class DatabaseIdentityStore extends AbstractIdentityStore {
+
+    /**
+     * Determines the list of groups that the specified Caller is in,
+     * based on the associated persistence store..
+     *
+     * @param callerName The Caller name
+     * @return The list of groups that the specified Caller is in, empty list if none,
+     * <code>null</code> if not supported.
+     */
+    @Override
+    public List<String> getCallerGroups(String callerName) {
+        return null;
+    }
+
+    /**
+     * Determines the list of roles that the specified Caller has,
+     * based on the associated persistence store. The returned role list
+     * would include roles directly assigned to the Caller, and roles assigned
+     * to groups which contain the Caller.
+     *
+     * @param callerName The Caller name
+     * @return The list of roles that the specified Caller has, empty list if none,
+     * <code>null</code> if not supported.
+     */
+    @Override
+    public List<String> getCallerRoles(String callerName) {
+        return null;
+    }
+
+    /**
+     * Default validation behavior for username/password credentials.
+     *
+     * @param usernamePasswordCredential Credential to validate
+     * @return The result
+     */
+    @Override
+    protected CredentialValidationResult validateUsernamePassword(UsernamePasswordCredential usernamePasswordCredential) {
+        return null;
+    }
+}

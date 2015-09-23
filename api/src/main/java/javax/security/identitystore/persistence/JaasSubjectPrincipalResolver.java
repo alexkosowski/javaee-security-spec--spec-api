@@ -37,10 +37,43 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.persistence;
+
+import javax.security.auth.Subject;
+import java.util.List;
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * <code>JaasSubjectPrincipalResolver</code> is used by
+ * <code>{@link JaasIdentityStore}</code> to determine caller principals from
+ * the JAAS Subject.
  */
-package javax.security;
+public interface JaasSubjectPrincipalResolver {
+
+    /**
+     * Determine the caller name.
+     *
+     * @param subject The authenticated JAAS subject.
+     * @return The caller name
+     */
+    String getCaller(Subject subject);
+
+    /**
+     * Determine the caller groups.
+     *
+     * @param subject The authenticated JAAS subject.
+     * @param callerName The caller name
+     * @return The list of groups that the specified Caller is in, empty list if none,
+     * <code>null</code> if not supported.
+     */
+    List<String> getCallerGroups(Subject subject, String callerName);
+
+    /**
+     * Determine the caller roles.
+     *
+     * @param subject The authenticated JAAS subject.
+     * @param callerName The caller name
+     * @return The list of roles that the specified Caller has, empty list if none,
+     * <code>null</code> if not supported.
+     */
+    List<String> getCallerRoles(Subject subject, String callerName);
+}

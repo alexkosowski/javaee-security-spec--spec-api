@@ -37,10 +37,44 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.persistence;
+
+import org.junit.Test;
+
+import javax.security.identitystore.persistence.cachedsource.CachedIdentityStoreSource;
+import javax.security.identitystore.persistence.cachedsource.JsonFileIdentityStoreSource;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Iterator;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * Tests the JSON file source
+ * {@link javax.security.identitystore.persistence.cachedsource.JsonFileIdentityStoreSource}.
+ * This would supply identity data to <code>{@link CachedIdentityStore}</code>.
  */
-package javax.security;
+public class JsonFileIdentityStoreSourceTest {
+
+    @Test
+    public void iterator() throws IOException {
+        URL resource = getClass().getClassLoader().getResource("identitystore/testIdStore.json");
+        if (null == resource)
+            throw new NullPointerException("\"identitystore/testIdStore.json\" not in classpath.");
+
+        String idStoreFilePath = resource.getFile();
+        File idStoreFile = new File(idStoreFilePath);
+
+        JsonFileIdentityStoreSource source = new JsonFileIdentityStoreSource(idStoreFile);
+
+        Iterator<CachedIdentityStoreSource.CallerSource> iterator = source.getCallerIterator();
+
+        while (iterator.hasNext()) {
+            CachedIdentityStoreSource.CallerSource caller = iterator.next();
+            System.out.println("Caller:");
+            System.out.println(caller.toString());
+            assertNotNull("Caller name", caller.getName());
+        }
+    }
+}

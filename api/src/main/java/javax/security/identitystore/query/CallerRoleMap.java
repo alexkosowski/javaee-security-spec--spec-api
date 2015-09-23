@@ -37,10 +37,44 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.query;
+
+import java.util.List;
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * <code>CallerRoleMap</code> provides optional, additional caller-role-mapping-related
+ * queries implemented by the identity store.
  */
-package javax.security;
+public interface CallerRoleMap {
+    /**
+     * Determines a list of callers found in the identity store, which have been
+     * assigned the given role.
+     * <p>
+     * NOTE THAT depending on the identity store implementation, this method may
+     * only consider callers which are explicitly assigned a role. Callers assigned
+     * via evaluated expressions (e.g., XACML expressions) may not be considered.
+     *
+     * @param role The role name
+     * @param includeGroupRoles <code>true</code> to include roles assigned via
+     *                          group memberships.
+     * @return The list of callers which have been assigned the given role, empty list if none,
+     * <code>null</code> if not supported.
+     */
+    List<String> getCallersWithRole(String role, boolean includeGroupRoles);
+
+    /**
+     * Determines a list of roles found in the identity store, which have been
+     * assigned to the given caller.
+     * <p>
+     * NOTE THAT depending on the identity store implementation, this method may
+     * only consider callers which are explicitly assigned a role. Callers assigned
+     * via evaluated expressions (e.g., XACML expressions) may not be considered.
+     *
+     * @param callerName The Caller name
+     * @param includeGroupRoles <code>true</code> to include roles assigned via
+     *                          group memberships.
+     * @return The list of roles that the specified caller has, empty list if none,
+     * <code>null</code> if not supported.
+     */
+    List<String> getCallerRoles(String callerName, boolean includeGroupRoles);
+}

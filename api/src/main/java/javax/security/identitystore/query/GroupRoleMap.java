@@ -37,10 +37,40 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.query;
+
+import java.util.List;
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * <code>GroupRoleMap</code> provides optional, additional group-role-mapping-related
+ * queries implemented by the identity store.
  */
-package javax.security;
+public interface GroupRoleMap {
+    /**
+     * Determines a list of groups found in the identity store, which have been
+     * assigned the given role.
+     * <p>
+     * NOTE THAT depending on the identity store implementation, this method may
+     * only consider groups which are explicitly assigned a role. Groups assigned
+     * via evaluated expressions (e.g., XACML expressions) may not be considered.
+     *
+     * @param role The role name
+     * @return The list of groups which have been assigned the given role, empty list if none,
+     * <code>null</code> if not supported.
+     */
+    List<String> getGroupsWithRole(String role);
+
+    /**
+     * Determines a list of roles found in the identity store, which have been
+     * assigned to the given group.
+     * <p>
+     * NOTE THAT depending on the identity store implementation, this method may
+     * only consider roles which are explicitly assigned to the group. Roles assigned
+     * via evaluated expressions (e.g., XACML expressions) may not be considered.
+     *
+     * @param groupName The group name
+     * @return The list roles assigned to the group, empty list if none,
+     * <code>null</code> if not supported.
+     */
+    List<String> getGroupRoles(String groupName);
+}

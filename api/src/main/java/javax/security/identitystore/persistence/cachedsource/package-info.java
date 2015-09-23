@@ -39,8 +39,13 @@
  */
 
 /**
- * The root Security API package.
+ * The Identity Store Persistence Cached Source API package. This package
+ * contains classes implementing {@link javax.security.identitystore.persistence.cachedsource.CachedIdentityStoreSource},
+ * which supplies data for the {@link javax.security.identitystore.persistence.CachedIdentityStore}.
+ * Each source is associated with a persistence mechanism, such as a file, which would be read
+ * in its entirety and cached in the <code>CachedIdentityStoreSource</code>.
  *
  * @version 1.0
  */
-package javax.security;
+package javax.security.identitystore.persistence.cachedsource;
+

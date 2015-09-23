@@ -37,10 +37,51 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.credential;
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * <code>AbstractCredential</code> contains behavior common to
+ * <code>{@link Credential}</code> implementations.
  */
-package javax.security;
+public abstract class AbstractCredential implements Credential {
+
+    private volatile boolean cleared = false;
+
+    /**
+     * Determines whether the credential value has been securely cleared.
+     * @return <code>true</code> if the credential has been cleared, otherwise false.
+     */
+    @Override
+    final public boolean isCleared() {
+        return cleared;
+    }
+
+    /**
+     * Specifies that the credential value has been securely cleared.
+     */
+    final protected void setCleared() {
+        this.cleared = true;
+    }
+
+
+    /**
+     * Clears the credential. For example, if the credential includes a password,
+     * this method would overwrite the password value.
+     */
+    @Override
+    final public void clear() {
+        clearCredential();
+        setCleared();
+    }
+
+    /**
+     * Invokes the specific subclass to securely clear the credential value.
+     * Some <code>{@link Credential}</code> subclasses contain credential values
+     * which are inherently secure, such as tokens, for which clearing the
+     * credential may not be necessary.
+     * <p>
+     * For example, if the credential includes a password,
+     * this method would overwrite the password value.
+     */
+    abstract protected void clearCredential();
+}

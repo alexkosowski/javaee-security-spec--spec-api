@@ -39,8 +39,9 @@
  */
 
 /**
- * The root Security API package.
+ * The Identity Store Query API package. This package contains interfaces for
+ * accessing extended query capability of identity store implementations.
  *
  * @version 1.0
  */
-package javax.security;
+package javax.security.identitystore.query;

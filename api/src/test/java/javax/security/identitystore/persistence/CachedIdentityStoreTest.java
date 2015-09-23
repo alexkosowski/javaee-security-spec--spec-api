@@ -37,10 +37,39 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.persistence;
+
+import org.junit.Test;
+
+import javax.security.identitystore.persistence.cachedsource.JsonFileIdentityStoreSource;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+
+import static org.junit.Assert.assertEquals;
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * Tests the cached identity store using the JSON file as the identity source.
+ * That is, tests the {@link javax.security.identitystore.persistence.CachedIdentityStore}
+ * using the {@link javax.security.identitystore.persistence.cachedsource.JsonFileIdentityStoreSource}.
+ * <p>
+ * This tests the API without invoking CDI.
  */
-package javax.security;
+public class CachedIdentityStoreTest {
+
+    @Test
+    public void constructor() throws IOException {
+        URL resource = getClass().getClassLoader().getResource("identitystore/testIdStore.json");
+        if (null == resource)
+            throw new NullPointerException("\"identitystore/testIdStore.json\" not in classpath.");
+        String idStoreFilePath = resource.getFile();
+        File idStoreFile = new File(idStoreFilePath);
+
+        JsonFileIdentityStoreSource source = new JsonFileIdentityStoreSource(idStoreFile);
+
+        CachedIdentityStore store = new CachedIdentityStore(source);
+        store.load();
+
+        assertEquals("Caller count", 2, store.getCallers(null).size());
+    }
+}

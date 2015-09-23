@@ -37,10 +37,47 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.persistence;
+
+import org.junit.Test;
+
+import javax.security.auth.login.Configuration;
+import javax.security.identitystore.CredentialValidationResult;
+import javax.security.identitystore.credential.Password;
+import javax.security.identitystore.credential.UsernamePasswordCredential;
+import java.io.IOException;
+
+import static org.junit.Assert.*;
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * Tests the JAAS identity store, {@link javax.security.identitystore.persistence.JaasIdentityStore}.
+ * <p>
+ * This tests the API without invoking CDI.
  */
-package javax.security;
+public class JaasIdentityStoreTest {
+
+    /**
+     * Tests the specialized method implementation <code>{@link JaasIdentityStore#validateUsernamePassword}</code>.
+     *
+     * @throws IOException
+     */
+    @Test
+    public void validateUsernamePassword() throws IOException {
+
+        // Need a principal resolver
+        JaasTestArtifacts.TestJaasSubjectPrincipalResolver resolver = new JaasTestArtifacts.TestJaasSubjectPrincipalResolver();
+
+        // Need a JAAS config
+        Configuration config = new JaasTestArtifacts.TestConfiguration();
+
+        // Instantiate the store with a selected config entry name
+        JaasIdentityStore store = new JaasIdentityStore(JaasTestArtifacts.CONFIG_ENTRY_NAME, config, resolver );
+
+        // Validate credentials
+        assertEquals("validate", CredentialValidationResult.Status.VALID,
+            store.validateUsernamePassword(new UsernamePasswordCredential("jsmith", new Password("welcome1"))).getStatus());
+        assertEquals("validate", CredentialValidationResult.Status.INVALID,
+            store.validateUsernamePassword(new UsernamePasswordCredential("jsmith", new Password("badPassword"))).getStatus());
+
+    }
+}

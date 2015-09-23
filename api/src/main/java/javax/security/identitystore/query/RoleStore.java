@@ -37,10 +37,53 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.query;
+
+import java.util.List;
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * <code>RoleStore</code> provides optional, additional role-related queries implemented
+ * by the identity store.
  */
-package javax.security;
+public interface RoleStore {
+
+    /**
+     * Determines a list of roles found in the identity store.
+     *
+     * @param regEx A regular expression to select roles by name,
+     *  <code>null</code> or empty string for all.
+     * @return The list of found roles, empty list if none,
+     * <code>null</code> if not supported.
+     */
+    List<String> getRoles(String regEx);
+
+    /**
+     * Determines a list of roles found in the identity store, which have been
+     * assigned to either a caller or a group.
+     * <p>
+     * NOTE THAT depending on the identity store implementation, this method may
+     * only consider roles which are explicitly mapped to callers and groups. Roles assigned
+     * via evaluated expressions (e.g., XACML expressions) may not be considered.
+     *
+     * @param regEx A regular expression to select roles by name,
+     *  <code>null</code> or empty string for all.
+     * @return The list of found roles, empty list if none,
+     * <code>null</code> if not supported.
+     */
+    List<String> getAssignedRoles(String regEx);
+
+    /**
+     * Determines a list of roles found in the identity store, which have not been
+     * assigned to either a caller or a group.
+     * <p>
+     * NOTE THAT depending on the identity store implementation, this method may
+     * only consider roles which are explicitly mapped to callers and groups. Roles assigned
+     * via evaluated expressions (e.g., XACML expressions) may not be considered.
+     *
+     * @param regEx A regular expression to select roles by name,
+     *  <code>null</code> or empty string for all.
+     * @return The list of found roles, empty list if none,
+     * <code>null</code> if not supported.
+     */
+    List<String> getUnassignedRoles(String regEx);
+}

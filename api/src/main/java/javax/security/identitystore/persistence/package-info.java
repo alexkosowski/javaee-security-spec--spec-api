@@ -39,8 +39,11 @@
  */
 
 /**
- * The root Security API package.
+ * The Identity Store Persistence API package. This package contains classes
+ * implementing {@link javax.security.identitystore.IdentityStore} and
+ * {@link javax.security.identitystore.query} package interfaces using identity
+ * data from specific persistence mechanisms.
  *
  * @version 1.0
  */
-package javax.security;
+package javax.security.identitystore.persistence;

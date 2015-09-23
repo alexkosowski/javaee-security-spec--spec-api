@@ -39,8 +39,11 @@
  */
 
 /**
- * The root Security API package.
+ * The Identity Store Credential API package. This package
+ * contains classes and interfaces associated with submitting and validating
+ * credentials.
  *
  * @version 1.0
  */
-package javax.security;
+package javax.security.identitystore.credential;
+

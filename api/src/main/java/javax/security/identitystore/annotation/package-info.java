@@ -39,8 +39,10 @@
  */
 
 /**
- * The root Security API package.
+ * The Identity Store Annotation API package. This package
+ * contains annotations defined by and used within the Identity Store API.
  *
  * @version 1.0
  */
-package javax.security;
+package javax.security.identitystore.annotation;
+

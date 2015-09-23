@@ -37,10 +37,44 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.persistence.cachedsource;
+
+import javax.enterprise.inject.Alternative;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * <code>MemoryIdentityStoreSource</code> is a {@link CachedIdentityStoreSource}
+ * implementation which determines identity data from a given collection.
  */
-package javax.security;
+@Alternative
+public class MemoryIdentityStoreSource extends CachedIdentityStoreSource {
+
+    private final Set<CallerSource> callers;
+
+    // TODO: Post-Construct to check @Caller(name=,groups={},roles={},credentials={@Credential(type=,value=,hash=,salt=),@Credential(...)},attributes={@Attribute(name=,value=),@Attribute(...)})
+
+
+    /**
+     * Constructor
+     *
+     * @param callers Caller identity data
+     */
+    public MemoryIdentityStoreSource(Set<CallerSource> callers) {
+        if (null == callers)
+            throw new NullPointerException("Caller source");
+        this.callers = callers;
+    }
+
+    /**
+     * Determines an iterator with which to read all of the caller identity data.
+     *
+     * @return The iterator
+     * @throws IOException An error occurred while reading the source.
+     */
+    @Override
+    public Iterator<CallerSource> getCallerIterator() throws IOException {
+        return callers.iterator();
+    }
+}

@@ -37,10 +37,64 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.credential;
+
+import java.util.Arrays;
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * Represents a text-based password, and includes a built-in mechanism for securely
+ * clearing the value.
  */
-package javax.security;
+public class Password {
+
+    final private static char[] EMPTY_VALUE = new char[0];
+
+    volatile private char[] value;
+
+    /**
+     * Constructor
+     *
+     * @param value The password value
+     * @throws java.lang.NullPointerException Value is null
+     */
+    public Password(char[] value) {
+        if (null == value)
+            throw new NullPointerException("Password value");
+
+        this.value = Arrays.copyOf(value,value.length);
+    }
+
+    /**
+     * Constructor
+     *
+     * @param value The password value
+     * @throws java.lang.NullPointerException Value is null
+     */
+    public Password(String value) {
+        this(null == value ? null : value.toCharArray());
+    }
+
+    /**
+     * Determines the password value.
+     *
+     * @return The password value, empty array if cleared.
+     */
+    public char[] getValue() {
+        return value;
+    }
+
+    /**
+     * Securely clears the password value.
+     */
+    public void clear() {
+        if (EMPTY_VALUE == value)
+            return;
+
+        char[] tempValue = value;
+        value = EMPTY_VALUE;
+
+        for (int i = 0; i < tempValue.length; i++) {
+            tempValue[i] = 0x00;
+        }
+    }
+}

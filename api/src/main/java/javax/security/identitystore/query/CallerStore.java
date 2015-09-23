@@ -37,10 +37,33 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.query;
+
+import java.util.List;
+import java.util.Map;
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * <code>CallerStore</code> provides optional, additional caller-related queries implemented
+ * by the identity store.
  */
-package javax.security;
+public interface CallerStore {
+
+    /**
+     * Determines a list of callers found in the identity store.
+     *
+     * @param regEx A regular expression to select callers by name,
+     *  <code>null</code> or empty string for all.
+     * @return The list of found callers, empty list if none,
+     * <code>null</code> if not supported.
+     */
+    List<String> getCallers(String regEx);
+
+    /**
+     * Determines the associated attribute map for the caller in the identity store.
+     *
+     * @param name Caller name
+     * @return The associated attributes, empty map if none,
+     * <code>null</code> if not supported.
+     */
+    Map<String, String> getCallerAttributes(String name);
+}

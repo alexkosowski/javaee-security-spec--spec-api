@@ -37,10 +37,47 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore;
+
+import javax.security.identitystore.credential.Credential;
+import java.util.List;
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * <code>IdentityStore</code> is a mechanism for validating a Caller's credentials
+ * and accessing a Caller's identity attributes, and would be used by
+ * an authentication mechanism, such as JASPIC.
+ * An <code>IdentityStore</code> obtains identity data from a persistence
+ * mechanism, such as a file, database, or LDAP.
  */
-package javax.security;
+public interface IdentityStore {
+
+    /**
+     * Determines the list of groups that the specified Caller is in,
+     * based on the associated persistence store..
+     *
+     * @param callerName The Caller name
+     * @return The list of groups that the specified Caller is in, empty list if none,
+     * <code>null</code> if not supported.
+     */
+    List<String> getCallerGroups(String callerName);
+
+    /**
+     * Determines the list of roles that the specified Caller has,
+     * based on the associated persistence store. The returned role list
+     * would include roles directly assigned to the Caller, and roles assigned
+     * to groups which contain the Caller.
+     *
+     * @param callerName The Caller name
+     * @return The list of roles that the specified Caller has, empty list if none,
+     * <code>null</code> if not supported.
+     */
+    List<String> getCallerRoles(String callerName);
+
+    /**
+     * Validates the given credential.
+     *
+     * @param credential The credential
+     * @return The validation result, including associated caller roles and groups.
+     */
+    public CredentialValidationResult validate(Credential credential);
+}

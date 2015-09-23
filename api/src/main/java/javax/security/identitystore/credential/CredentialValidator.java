@@ -37,10 +37,39 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.credential;
+
+import javax.security.identitystore.CredentialValidationResult;
+import javax.security.identitystore.IdentityStore;
+import javax.security.identitystore.annotation.Validator;
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * <code>CredentialValidator</code> provides a means for extending the
+ * <code>{@link javax.security.identitystore.IdentityStore}</code>
+ * credential validation mechanism to validate any <code>{@link Credential}</code>
+ * implementation against any <code>IdentityStore</code> implementation.
+ * <p>
+ * A <code>CredentialValidator</code> is registered for use by the <code>IdentityStore</code>
+ * by annotating the <code>CredentialValidator</code> implementation using
+ * the CDI Qualifier <code>{@link Validator}</code>.
+ * <p>
+ * For example, to register <code>MyCredentialValidator</code>
+ * to validate <code>MyCredential</code> against <code>MyIdentityStore</code>, annotate as:<br><br>
+ * <code>
+ * &#64;Validator(credentialClass = MyCredential.class, identityStoreClass = MyIdentityStore.class)<br>
+ * public class MyCredentialValidator implements CredentialValidator { .. }
+ * </code>
  */
-package javax.security;
+public interface CredentialValidator {
+
+    /**
+     * Validate the credential against the identity store.
+     *
+     * @param credential The credential to validate.
+     * @param identityStore The identity store to validate against.
+     * @return The result, including
+     * <code>{@link javax.security.identitystore.CredentialValidationResult.Status}</code>
+     * reporting whether validation succeeded.
+     */
+    public CredentialValidationResult validate(Credential credential, IdentityStore identityStore);
+}

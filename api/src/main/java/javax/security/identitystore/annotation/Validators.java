@@ -37,10 +37,20 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.annotation;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * <code>Validators</code> supports repeating <code>{@link Validator}</code> annotations.
  */
-package javax.security;
+@Retention(RUNTIME)
+@Target({TYPE, METHOD, FIELD, PARAMETER})
+public @interface Validators {
+    Validator[] value();
+}

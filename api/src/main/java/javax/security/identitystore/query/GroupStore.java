@@ -37,10 +37,37 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.query;
+
+import java.util.List;
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * <code>GroupStore</code> provides optional, additional group-related queries implemented
+ * by the identity store.
  */
-package javax.security;
+public interface GroupStore {
+
+    /**
+     * Determines a list of groups found in the identity store.
+     *
+     * @param regEx A regular expression to select groups by name,
+     *  <code>null</code> or empty string for all.
+     * @return The list of found groups, empty list if none,
+     * <code>null</code> if not supported.
+     */
+    List<String> getGroups(String regEx);
+
+    /**
+     * Determines a list of callers found in the identity store, which have been
+     * assigned to the given group.
+     * <p>
+     * NOTE THAT depending on the identity store implementation, this method may
+     * only consider callers which are explicitly assigned to groups. Callers assigned
+     * via evaluated expressions (e.g., XACML expressions) may not be considered.
+     *
+     * @param group The group name
+     * @return The list of callers which are assigned to the group, empty list if none,
+     * <code>null</code> if not supported.
+     */
+    List<String> getCallersInGroup(String group);
+}

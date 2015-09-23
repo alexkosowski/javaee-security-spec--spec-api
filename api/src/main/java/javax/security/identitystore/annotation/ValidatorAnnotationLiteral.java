@@ -37,10 +37,38 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.annotation;
+
+import javax.enterprise.util.AnnotationLiteral;
+import javax.security.identitystore.IdentityStore;
+import javax.security.identitystore.credential.Credential;
+import javax.security.identitystore.credential.CredentialValidator;
+
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * <code>ValidatorAnnotationLiteral</code> enables programmatic CDI lookup of
+ * qualifying <code>{@link CredentialValidator}</code> implementations.
  */
-package javax.security;
+public class ValidatorAnnotationLiteral
+        extends AnnotationLiteral<Validator>
+        implements Validator {
+
+    private final Class<? extends Credential> credentialClass;
+    private final Class<? extends IdentityStore> identityStoreClass;
+
+    public ValidatorAnnotationLiteral(Class<? extends Credential> credentialClass, Class<? extends IdentityStore> identityStoreClass) {
+        this.credentialClass = credentialClass;
+        this.identityStoreClass = identityStoreClass;
+    }
+
+    @Override
+    public Class<? extends Credential> credentialClass() {
+        return credentialClass;
+    }
+
+    @Override
+    public Class<? extends IdentityStore> identityStoreClass() {
+        return identityStoreClass;
+    }
+}
+

@@ -48,6 +48,18 @@
 					<windowtitle>EE Security API ${project.version}</windowtitle>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.18.1</version>
+				<configuration>
+					<excludes>
+						<!-- Exclude LDAP tests until we embed an LDAP server -->
+						<exclude>**/LdapIdentityStoreTest.java</exclude>
+						<exclude>**/ValidateCredentialTest_LdapStore.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
@@ -66,8 +78,22 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.0</version>
+			<version>4.11</version>
 			<scope>test</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.weld.se</groupId>
+			<artifactId>weld-se</artifactId>
+			<version>2.3.0.Beta2</version>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.jglue.cdi-unit</groupId>
+			<artifactId>cdi-unit</artifactId>
+			<version>3.1.2</version>
+			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -82,6 +108,18 @@
 			<artifactId>jboss-logging</artifactId>
 			<version>3.3.0.Final</version>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.json</groupId>
+			<artifactId>javax.json-api</artifactId>
+			<version>1.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.json</artifactId>
+			<version>1.0.4</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

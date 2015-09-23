@@ -37,10 +37,40 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
+package javax.security.identitystore.credential;
 
 /**
- * The root Security API package.
- *
- * @version 1.0
+ * <code>Credential</code> represents the credential the caller will use to authenticate.
  */
-package javax.security;
+public interface Credential {
+
+    /**
+     * Determines whether the credential value has been securely cleared.
+     * @return <code>true</code> if the credential has been cleared, otherwise false.
+     */
+    public boolean isCleared();
+
+    /**
+     * Clears the credential. For example, if the credential includes a password,
+     * this method would overwrite the password value.
+     */
+    public void clear();
+
+    /**
+     * Determines the caller associated with this credential. This value would
+     * usually be the unique value identifying the caller, like a login name.
+     *
+     * @return The caller associated with this credential
+     */
+    public String getCaller();
+
+    /**
+     * Determines whether the credential is valid. This would be called as part of
+     * the credential validation process to check the integrity of the credential,
+     * such as a signature check. This check would be self-contained,
+     * not requiring identity store access.
+     *
+     * @return <code>true</code> if credential has integrity.
+     */
+    public boolean isValid();
+}

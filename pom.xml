@@ -43,6 +43,7 @@
     </modules>
 
     <build>
+        <!-- <defaultGoal>clean package</defaultGoal> -->
         <defaultGoal>clean package javadoc:javadoc</defaultGoal>
     </build>
 
