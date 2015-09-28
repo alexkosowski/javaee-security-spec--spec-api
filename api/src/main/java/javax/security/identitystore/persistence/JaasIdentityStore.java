@@ -132,6 +132,9 @@ public class JaasIdentityStore extends AbstractIdentityStore {
 
         LoginContext loginContext = null;
         Subject subject = null;
+        String caller = null;
+        List<String> groups = null;
+        List<String> roles = null;
         try {
             // Initialize the LoginContext
             loginContext = new LoginContext(appConfigurationEntryName, new Subject(), callbackHandler, configuration);
@@ -143,6 +146,12 @@ public class JaasIdentityStore extends AbstractIdentityStore {
             subject = loginContext.getSubject();
             if (null == subject)
                 throw new IllegalStateException("Null Subject");
+
+            // Resolve principals
+            caller = jaasSubjectPrincipalResolver.getCaller(subject);
+            groups = jaasSubjectPrincipalResolver.getCallerGroups(subject, caller);
+            roles = jaasSubjectPrincipalResolver.getCallerRoles(subject, caller);
+
         } catch (LoginException e) {
             // TODO: Logging
             e.printStackTrace();
@@ -163,11 +172,6 @@ public class JaasIdentityStore extends AbstractIdentityStore {
                 System.out.println("Logout exception: " + e.getMessage());
             }
         }
-
-        // Resolve principals
-        String caller = jaasSubjectPrincipalResolver.getCaller(subject);
-        List<String> groups = jaasSubjectPrincipalResolver.getCallerGroups(subject, caller);
-        List<String> roles = jaasSubjectPrincipalResolver.getCallerRoles(subject, caller);
 
         return new CredentialValidationResult(CredentialValidationResult.Status.VALID, caller, groups, roles);
     }
