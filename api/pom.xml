@@ -64,50 +64,28 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>org.picketlink</groupId>
-			<artifactId>picketlink-idm-api</artifactId>
-			<version>2.7.0.Final</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.picketlink</groupId>
-			<artifactId>picketlink-idm-impl</artifactId>
-			<version>2.7.0.Final</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 			<scope>test</scope>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.weld.se</groupId>
 			<artifactId>weld-se</artifactId>
 			<version>2.3.0.Beta2</version>
 			<scope>compile</scope>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.jglue.cdi-unit</groupId>
 			<artifactId>cdi-unit</artifactId>
 			<version>3.1.2</version>
-			<scope>compile</scope>
-			<optional>true</optional>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.simplestub</groupId>
 			<artifactId>simplestub</artifactId>
 			<version>0.7</version>
 			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.logging</groupId>
-			<artifactId>jboss-logging</artifactId>
-			<version>3.3.0.Final</version>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.json</groupId>
